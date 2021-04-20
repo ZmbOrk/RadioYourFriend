@@ -2,7 +2,7 @@ package ru.netology;
 
 class Radio {
     private int firstStation = 0;
-    private int lastStation = 9;
+    private int finalStation = 9;
     private int actualRadioStation;
     private int actualSoundVolume;
     private int minSoundVolume = 0;
@@ -13,24 +13,24 @@ class Radio {
     }
 
     public void setCurrentRadioStation(int currentRadioStation) {
-        if (currentRadioStation > lastStation) {
+        if (currentRadioStation > finalStation) {
             this.actualRadioStation = firstStation;
             return;
         }
         if (currentRadioStation < firstStation) {
-            this.actualRadioStation = lastStation;
+            this.actualRadioStation = finalStation;
             return;
         }
         this.actualRadioStation = currentRadioStation;
     }
 
     public int nextRadioStation() {
-        actualRadioStation = actualRadioStation >= lastStation ? firstStation : ++actualRadioStation;
+        actualRadioStation = actualRadioStation >= finalStation ? firstStation : ++actualRadioStation;
         return actualRadioStation;
     }
 
     public int prevRadioStation() {
-        actualRadioStation = actualRadioStation <= firstStation ? lastStation : --actualRadioStation;
+        actualRadioStation = actualRadioStation <= firstStation ? finalStation : --actualRadioStation;
         return actualRadioStation;
     }
 
