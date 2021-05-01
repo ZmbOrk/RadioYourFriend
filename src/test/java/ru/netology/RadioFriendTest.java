@@ -5,91 +5,110 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
-    Radio friend = new Radio();
 
+    @Test
+    void shouldNextStationOverFinalStation() {
+        Radio gaga = new Radio(140,140);
+        gaga.nextRadioStation();
+        assertEquals(0, gaga.getCurrentRadioStation());
+    }
     @Test
     void shouldNextStationIfFinalStation() {
-        friend.setCurrentRadioStation(9);
-        friend.nextRadioStation();
-        assertEquals(0, friend.getCurrentRadioStation());
+        Radio gaga = new Radio(10,10);
+        gaga.nextRadioStation();
+        assertEquals(0, gaga.getCurrentRadioStation());
     }
-
     @Test
     void shouldNextRadioStation() {
-        friend.setCurrentRadioStation(2);
-        friend.nextRadioStation();
-        assertEquals(3, friend.getCurrentRadioStation());
+        Radio gaga = new Radio(5,10);
+        gaga.nextRadioStation();
+        assertEquals(6, gaga.getCurrentRadioStation());
+    }
+    @Test
+    void shouldNextStationOverMax() {
+        Radio gaga = new Radio(141,140);
+        gaga.nextRadioStation();
+        assertEquals(0, gaga.getCurrentRadioStation());
+    }
+    @Test
+    void shouldPrevStationIfCurrentStationMin() {
+        Radio gaga = new Radio(0,10);
+        gaga.prevRadioStation();
+        assertEquals(10, gaga.getCurrentRadioStation());
     }
 
     @Test
-    void shouldPrevStationIfStartStation() {
-        friend.setCurrentRadioStation(0);
-        friend.prevRadioStation();
-        assertEquals(9, friend.getCurrentRadioStation());
+    void shouldPrevStationIfCurrentStationStart() {
+        Radio gaga = new Radio(0,56);
+        gaga.prevRadioStation();
+        assertEquals(56, gaga.getCurrentRadioStation());
+    }
+
+    @Test
+    void shouldPrevStationIfCurrentStationLessStart() {
+        Radio gaga = new Radio(-1,56);
+        gaga.prevRadioStation();
+        assertEquals(56, gaga.getCurrentRadioStation());
     }
 
     @Test
     void shouldPrevRadioStation() {
-        friend.setCurrentRadioStation(3);
-        friend.prevRadioStation();
-        assertEquals(2, friend.getCurrentRadioStation());
+        Radio gaga = new Radio(3,10);
+        gaga.prevRadioStation();
+        assertEquals(2, gaga.getCurrentRadioStation());
     }
 
     @Test
     void shouldControlNumButtonStation() {
-        friend.setCurrentRadioStation(5);
-        assertEquals(5, friend.getCurrentRadioStation());
-    }
-
-    @Test
-    void shouldControlMinOutsideStation() {
-        friend.setCurrentRadioStation(-1);
-        assertEquals(9, friend.getCurrentRadioStation());
-    }
-
-    @Test
-    void shouldControlMaxOutsideStation() {
-        friend.setCurrentRadioStation(10);
-        assertEquals(0, friend.getCurrentRadioStation());
+        Radio gaga = new Radio(5,10);
+        assertEquals(5, gaga.getCurrentRadioStation());
     }
 
     @Test
     void shouldSoundVolumeUp() {
-        friend.setCurrentSoundVolume(9);
-        friend.shouldSoundVolumeUp();
-        assertEquals(10, friend.getCurrentSoundVolume());
+        Radio gaga = new Radio();
+        gaga.setCurrentSoundVolume(9);
+        gaga.shouldSoundVolumeUp();
+        assertEquals(10, gaga.getCurrentSoundVolume());
     }
 
     @Test
     void shouldSoundVolumeDown() {
-        friend.setCurrentSoundVolume(7);
-        friend.shouldSoundVolumeDown();
-        assertEquals(6, friend.getCurrentSoundVolume());
-    }
-
-    @Test
-    void setVolumeUnderMin() {
-        friend.setCurrentSoundVolume(-1);
-        assertEquals(0, friend.getCurrentSoundVolume());
-    }
-
-    @Test
-    void setVolumeOverMax() {
-        friend.setCurrentSoundVolume(11);
-        assertEquals(10, friend.getCurrentSoundVolume());
+        Radio gaga = new Radio();
+        gaga.setCurrentSoundVolume(7);
+        gaga.shouldSoundVolumeDown();
+        assertEquals(6, gaga.getCurrentSoundVolume());
     }
 
     @Test
     void shouldSoundVolumeUpControl() {
-        friend.setCurrentSoundVolume(10);
-        friend.shouldSoundVolumeUp();
-        assertEquals(10, friend.getCurrentSoundVolume());
+        Radio gaga = new Radio();
+        gaga.setCurrentSoundVolume(100);
+        gaga.shouldSoundVolumeUp();
+        assertEquals(100, gaga.getCurrentSoundVolume());
+    }
+
+    @Test
+    void shouldSoundVolumeUpControlOverMax() {
+        Radio gaga = new Radio();
+        gaga.setCurrentSoundVolume(101);
+        gaga.shouldSoundVolumeUp();
+        assertEquals(100, gaga.getCurrentSoundVolume());
     }
 
     @Test
     void shouldSoundVolumeDownControl() {
-        friend.setCurrentSoundVolume(0);
-        friend.shouldSoundVolumeDown();
-        assertEquals(0, friend.getCurrentSoundVolume());
+        Radio gaga = new Radio();
+        gaga.setCurrentSoundVolume(0);
+        gaga.shouldSoundVolumeDown();
+        assertEquals(0, gaga.getCurrentSoundVolume());
+    }
+
+    @Test
+    void shouldSoundVolumeDownControlLessMin() {
+        Radio gaga = new Radio();
+        gaga.setCurrentSoundVolume(-1);
+        gaga.shouldSoundVolumeDown();
+        assertEquals(0, gaga.getCurrentSoundVolume());
     }
 }
